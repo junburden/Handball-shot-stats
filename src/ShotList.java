@@ -7,13 +7,13 @@ import java.util.List;
  * @author Jun Burden
  * @version 1.0
  */
-public class ShotSet {
+public class ShotList {
 	private List<Shot> shots;
 	private int numGoals;
 	private int numSaves;
 	private int numShots;
 	
-	public ShotSet() {
+	public ShotList() {
 		shots = new ArrayList<Shot>();
 		numGoals = 0;
 		numSaves = 0;
@@ -35,9 +35,14 @@ public class ShotSet {
 		assert (numGoals + numSaves == numShots);
 	}
 	
-	public void draw(Graphics g) {
+	/**
+	 * Draws the shots in the list on the graphics window
+	 * @param g Graphics window to be drawn on
+	 * @param scale of the window, cm/pixel
+	 */
+	public void draw(Graphics g, double scale) {
 		for(Shot shot:shots) {
-			shot.draw(g);
+			shot.draw(g, scale);
 		}
 	}
 	

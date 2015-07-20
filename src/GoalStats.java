@@ -10,17 +10,24 @@ import java.awt.event.MouseEvent;
  */
 public class GoalStats extends GUI{
 
+	private final double CM_PER_PIXELS = 1; 
+	private final int GOAL_HEIGHT = (int) (200/CM_PER_PIXELS);
+	private final int GOAL_WIDTH = (int) (300/CM_PER_PIXELS);
+	private final int POST_THICKNESS = (int) (8/CM_PER_PIXELS);
+	private final int GOAL_POS_X = 200;
+	private final int GOAL_POS_Y = 200;
+	
 	private Shot clickShot;
 	private boolean isGoal;
 	private boolean showAll;
 	
-	private ShotSet shots;
+	private ShotList shots;
 	
 	public GoalStats() {
 		clickShot = null;
 		isGoal = true;
 		showAll = false;
-		shots = new ShotSet();
+		shots = new ShotList();
 	}
 
 	@Override
@@ -31,7 +38,7 @@ public class GoalStats extends GUI{
 		else {
 			isGoal = false;
 		}
-		clickShot = new Shot(e.getX(), e.getY(), isGoal);
+		clickShot = new Shot(e.getX()*CM_PER_PIXELS, e.getY()*CM_PER_PIXELS, isGoal);
 	}
 	
 	@Override
@@ -45,7 +52,7 @@ public class GoalStats extends GUI{
 	protected void setGoal(boolean goal) {
 		isGoal = goal;
 		if(clickShot != null) {
-			clickShot = new Shot(clickShot.getX(),clickShot.getY(),isGoal);
+			clickShot = new Shot(clickShot.getX()*CM_PER_PIXELS,clickShot.getY()*CM_PER_PIXELS,isGoal);
 		}
 	}
 	@Override
@@ -67,17 +74,17 @@ public class GoalStats extends GUI{
 	
 	private void drawGoal(Graphics g) {
 		g.setColor(Color.BLUE);
-		g.fillRect(200, 200, 8, 208);
-		g.fillRect(508, 200, 8, 208);
-		g.fillRect(200, 200, 316, 8);
+		g.fillRect(GOAL_POS_X, GOAL_POS_Y, POST_THICKNESS, GOAL_HEIGHT+POST_THICKNESS);
+		g.fillRect(GOAL_POS_X+GOAL_WIDTH+POST_THICKNESS, GOAL_POS_Y, POST_THICKNESS, GOAL_HEIGHT+POST_THICKNESS);
+		g.fillRect(GOAL_POS_X, GOAL_POS_Y, GOAL_WIDTH+POST_THICKNESS*2, POST_THICKNESS);
 	}
 	
 	private void drawShots(Graphics g) {
 		if(clickShot != null) {
-		    clickShot.draw(g);
+		    clickShot.draw(g, CM_PER_PIXELS);
 		}
 		if(showAll) {
-			shots.draw(g);
+			shots.draw(g, CM_PER_PIXELS);
 		}
 	}
 	

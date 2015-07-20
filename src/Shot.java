@@ -4,28 +4,29 @@ import java.awt.Graphics;
 /**
  * A class to define a shot on goal
  * The x position is taken from the center of the goal and
- * the y position is taken from the ground up
+ * the y position is taken from the ground up, measurements are
+ * in centimeters stored as a double
  * @author Jun Burden
  * @version 1.0
  */
 public class Shot {
-	private int x;
-	private int y;
+	private double x;
+	private double y;
 	private boolean goal;
 	
 	private final int SIZE = 4;
 	
-	public Shot(int x, int y, boolean goal) {
+	public Shot(double x, double y, boolean goal) {
 		this.x = x;
 		this.y = y;
 		this.goal = goal;
 	}
 	
-	public int getX() {
+	public double getX() {
 		return x;
 	}
 	
-	public int getY() {
+	public double getY() {
 		return y;
 	}
 	
@@ -33,15 +34,22 @@ public class Shot {
 		return goal;
 	}
 	
-	public void draw(Graphics g) {
+	/**
+	 * Draws the shot on the graphics window
+	 * @param g Graphics window to be drawn on
+	 * @param scale of the window, cm/pixel
+	 */
+	public void draw(Graphics g, double scale) {
+		int xPos = (int)(x/scale);
+		int yPos = (int)(y/scale);
 		if(goal){
 			g.setColor(Color.GREEN);
-			g.drawOval(x-SIZE, y-SIZE, SIZE*2, SIZE*2);
+			g.drawOval(xPos-SIZE, yPos-SIZE, SIZE*2, SIZE*2);
 		}
 		else {
 			g.setColor(Color.RED);
-			g.drawLine(x-SIZE, y-SIZE, x+SIZE, y+SIZE);
-			g.drawLine(x+SIZE, y-SIZE, x-SIZE, y+SIZE);
+			g.drawLine(xPos-SIZE, yPos-SIZE, xPos+SIZE, yPos+SIZE);
+			g.drawLine(xPos+SIZE, yPos-SIZE, xPos-SIZE, yPos+SIZE);
 		}
 	}
 }
