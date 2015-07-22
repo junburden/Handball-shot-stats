@@ -39,9 +39,9 @@ public class Shot {
 	 * @param g Graphics window to be drawn on
 	 * @param scale of the window, cm/pixel
 	 */
-	public void draw(Graphics g, double scale) {
-		int xPos = (int)(x/scale);
-		int yPos = (int)(y/scale);
+	public void draw(Graphics g, double scale, int xOffset, int yOffset) {
+		int xPos = (int)(x/scale)+xOffset;
+		int yPos = yOffset-(int)(y/scale);
 		if(goal){
 			g.setColor(Color.GREEN);
 			g.drawOval(xPos-SIZE, yPos-SIZE, SIZE*2, SIZE*2);

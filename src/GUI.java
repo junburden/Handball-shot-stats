@@ -69,6 +69,21 @@ public abstract class GUI {
 	protected abstract void saveShot();
 	
 	/**
+	 * Load a csv file containing shot statistic information
+	 */
+	protected abstract void loadData();
+	
+	/**
+	 * Save shot statistic information to csv file
+	 */
+	protected abstract void saveData();
+	
+	/**
+	 * Clear shot statistic information
+	 */
+	protected abstract void clearData();
+	
+	/**
 	 * @return the JTextArea at the bottom of the screen for output.
 	 */
 	public JTextArea getTextOutputArea() {
@@ -95,7 +110,7 @@ public abstract class GUI {
 	private static final int DEFAULT_DRAWING_WIDTH = 640;
 	private static final int TEXT_OUTPUT_ROWS = 5;
 
-	private JFrame frame;
+	protected JFrame frame;
 
 	private JPanel controls;
 	private JComponent drawing;
@@ -113,6 +128,30 @@ public abstract class GUI {
 				System.exit(0);
 			}
 		});
+		
+		JButton load = new JButton("Load");
+		load.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				loadData();
+				redraw();
+			}
+		});
+		
+		JButton save = new JButton("Save");
+		save.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				saveData();
+				redraw();
+			}
+		});
+		
+		JButton clear = new JButton("Clear");
+		clear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				clearData();
+				redraw();
+			}
+		});
 
 		JButton goal = new JButton("Goal");
 		goal.addActionListener(new ActionListener() {
@@ -122,8 +161,8 @@ public abstract class GUI {
 			}
 		});
 		
-		JButton save = new JButton("Save");
-		save.addActionListener(new ActionListener() {
+		JButton noGoal = new JButton("No Goal");
+		noGoal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				setGoal(false);
 				redraw();
@@ -164,11 +203,19 @@ public abstract class GUI {
 			}
 		});
 		
-		JPanel goalSave = new JPanel();
-		goalSave.setMaximumSize(new Dimension(150, 50));
-		goalSave.setLayout(new GridLayout(1, 2));
-		goalSave.add(goal);
-		goalSave.add(save);
+		JPanel loadSaveClear = new JPanel();
+		loadSaveClear.setMaximumSize(new Dimension(150, 50));
+		loadSaveClear.setLayout(new GridLayout(2, 2));
+		loadSaveClear.add(load);
+		loadSaveClear.add(save);
+		loadSaveClear.add(clear);
+		
+		
+		JPanel goalNoGoal = new JPanel();
+		goalNoGoal.setMaximumSize(new Dimension(150, 50));
+		goalNoGoal.setLayout(new GridLayout(1, 2));
+		goalNoGoal.add(goal);
+		goalNoGoal.add(noGoal);
 		
 		JPanel enterShow = new JPanel();
 		enterShow.setMaximumSize(new Dimension(150, 100));
@@ -181,7 +228,9 @@ public abstract class GUI {
 		loadQuit.setLayout(new GridLayout(1, 1));
 		loadQuit.add(quit);
 		
-		controls.add(goalSave);
+		controls.add(loadSaveClear);
+		controls.add(Box.createRigidArea(new Dimension(0, 50)));
+		controls.add(goalNoGoal);
 		controls.add(Box.createRigidArea(new Dimension(0, 50)));
 		controls.add(enterShow);
 

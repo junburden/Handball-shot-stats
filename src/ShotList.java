@@ -35,14 +35,18 @@ public class ShotList {
 		assert (numGoals + numSaves == numShots);
 	}
 	
+	public List<Shot> getList() {
+		return shots;
+	}
+	
 	/**
 	 * Draws the shots in the list on the graphics window
 	 * @param g Graphics window to be drawn on
 	 * @param scale of the window, cm/pixel
 	 */
-	public void draw(Graphics g, double scale) {
+	public void draw(Graphics g, double scale, int xOffset, int yOffset) {
 		for(Shot shot:shots) {
-			shot.draw(g, scale);
+			shot.draw(g, scale, xOffset, yOffset);
 		}
 	}
 	
