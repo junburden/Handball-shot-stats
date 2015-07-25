@@ -51,7 +51,7 @@ public class GoalStats extends GUI{
 	@Override
 	protected void onKeyPress(KeyEvent e) {
 		if(e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_ENTER) {
-			saveShot();
+			submitShot();
 		}
 	}
 	
@@ -67,7 +67,7 @@ public class GoalStats extends GUI{
 	}
 	
 	@Override
-	protected void saveShot() {
+	protected void submitShot() {
 		if(clickShot != null) {
 		    shots.addShot(clickShot);
 		    clickShot = null;

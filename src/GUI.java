@@ -66,7 +66,7 @@ public abstract class GUI {
 	 * Is called when the enter button is pressed to indicate
 	 * the shot is to be saved
 	 */
-	protected abstract void saveShot();
+	protected abstract void submitShot();
 	
 	/**
 	 * Load a csv file containing shot statistic information
@@ -172,7 +172,7 @@ public abstract class GUI {
 		JButton submit = new JButton("Enter");
 		submit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
-				saveShot();
+				submitShot();
 				redraw();
 			}
 		});
