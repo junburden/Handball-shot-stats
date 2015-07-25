@@ -15,11 +15,20 @@ public class Shot {
 	private boolean goal;
 	
 	private final int SIZE = 4;
+	private final String csvSplitBy = ",";
+	public static final String FILE_HEADER = "X,Y,goal";
 	
 	public Shot(double x, double y, boolean goal) {
 		this.x = x;
 		this.y = y;
 		this.goal = goal;
+	}
+	
+	public Shot(String string){
+		String[] elements = string.split(csvSplitBy);
+	    this.x = Double.parseDouble(elements[0]);
+	    this.y = Double.parseDouble(elements[1]);
+	    this.goal = Boolean.parseBoolean(elements[2]);
 	}
 	
 	public double getX() {
@@ -51,5 +60,9 @@ public class Shot {
 			g.drawLine(xPos-SIZE, yPos-SIZE, xPos+SIZE, yPos+SIZE);
 			g.drawLine(xPos+SIZE, yPos-SIZE, xPos-SIZE, yPos+SIZE);
 		}
+	}
+	
+	public String toString(){
+		return x+","+y+","+goal;
 	}
 }

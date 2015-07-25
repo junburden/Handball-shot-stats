@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 public class CsvFileHandler {
      
     //CSV file header, column titles
-    private static final String FILE_HEADER = "X,Y,goal";
     
     /**
      * Writes shot statistics to a given csv file. If the file already exists there
@@ -38,9 +37,9 @@ public class CsvFileHandler {
         	// Write stats to the file
         	if(overrideFile) {
 	        	PrintWriter writer = new PrintWriter(fileName, "UTF-8");
-	        	writer.println(FILE_HEADER);
+	        	writer.println(Shot.FILE_HEADER);
 	        	for(Shot shot:shots.getList()) {
-	        		writer.println(shot.getX()+","+shot.getY()+","+shot.wasGoal());
+	        		writer.println(shot.toString());
 	        	}
 	        	writer.close();
         	}
@@ -59,18 +58,13 @@ public class CsvFileHandler {
     public static void readCsvFile(File file, ShotList listOfShots) {
     	BufferedReader br = null;
     	String line = "";
-    	String cvsSplitBy = ",";
     	
     	try {
     		br = new BufferedReader(new FileReader(file));
     		// Ignore header line
     		br.readLine();
     		while ((line = br.readLine()) != null) {
-			    String[] elements = line.split(cvsSplitBy);
-			    double x = Double.parseDouble(elements[0]);
-			    double y = Double.parseDouble(elements[1]);
-			    boolean goal = Boolean.parseBoolean(elements[2]);
-			    listOfShots.addShot(new Shot(x,y,goal));
+			    listOfShots.addShot(new Shot(line));
 		    }
     	} catch(Exception e) {
     		
