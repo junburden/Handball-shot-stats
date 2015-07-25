@@ -19,20 +19,24 @@ public class GoalStats extends GUI{
 	private final int GOAL_HEIGHT = (int) (200/CM_PER_PIXELS);
 	private final int GOAL_WIDTH = (int) (300/CM_PER_PIXELS);
 	private final int POST_THICKNESS = (int) (8/CM_PER_PIXELS);
-	private final int GOAL_POS_X = 350;
-	private final int GOAL_POS_Y = 400;
+	private final int GOAL_POS_X = 300;
+	private final int GOAL_POS_Y = 300;
 	
 	private Shot clickShot;
 	private boolean isGoal;
 	private boolean showAll;
+	private int selectedTeam;
 	
-	private ShotList shots;
+	private ShotList[] shots;
 	
 	public GoalStats() {
 		clickShot = null;
 		isGoal = true;
 		showAll = false;
-		shots = new ShotList();
+		selectedTeam = 0;
+		shots = new ShotList[2];
+		shots[0] = new ShotList();
+		shots[1] = new ShotList();
 	}
 
 	@Override
@@ -56,6 +60,11 @@ public class GoalStats extends GUI{
 	}
 	
 	@Override
+	protected void selectTeam(int team){
+		selectedTeam = team;
+	}
+	
+	@Override
 	protected void setGoal(boolean isGoal) {
 		if(clickShot != null) {
 			clickShot = new Shot(clickShot.getX(), clickShot.getY(), isGoal);
@@ -69,7 +78,7 @@ public class GoalStats extends GUI{
 	@Override
 	protected void submitShot() {
 		if(clickShot != null) {
-		    shots.addShot(clickShot);
+		    shots[selectedTeam].addShot(clickShot);
 		    clickShot = null;
 		}
 	}
@@ -85,7 +94,7 @@ public class GoalStats extends GUI{
 		File file = fc.getSelectedFile();
 		
 		if(returnValue == JFileChooser.APPROVE_OPTION) {
-		    CsvFileHandler.readCsvFile(file, shots);
+		    CsvFileHandler.readCsvFile(file, shots[selectedTeam]);
 		}
 	}
 
@@ -98,7 +107,7 @@ public class GoalStats extends GUI{
 		
 		if(returnValue == JFileChooser.APPROVE_OPTION) {
 			String fileName = fc.getSelectedFile().getAbsolutePath()+".csv";
-		    CsvFileHandler.writeCsvFile(fileName, shots);
+		    CsvFileHandler.writeCsvFile(fileName, shots[selectedTeam]);
 		}
 	}
 	
@@ -106,7 +115,7 @@ public class GoalStats extends GUI{
 	protected void clearData() {
 		int dialogResult = JOptionPane.showConfirmDialog (null, "Are you sure you want to clear all of the shooting statistics?","Warning",JOptionPane.YES_NO_OPTION);
         if(dialogResult == JOptionPane.YES_OPTION){
-            shots = new ShotList();
+            shots[selectedTeam] = new ShotList();
             clickShot = null;
         }
 	}
@@ -115,7 +124,7 @@ public class GoalStats extends GUI{
 	protected void redraw(Graphics g) {
 		drawGoal(g);
 		drawShots(g);
-		getTextOutputArea().setText(shots.toString());
+		getTextOutputArea().setText(shots[selectedTeam].toString());
 	}
 	
 	private void drawGoal(Graphics g) {
@@ -130,7 +139,7 @@ public class GoalStats extends GUI{
 		    clickShot.draw(g, CM_PER_PIXELS, GOAL_POS_X, GOAL_POS_Y);
 		}
 		if(showAll) {
-			shots.draw(g, CM_PER_PIXELS, GOAL_POS_X, GOAL_POS_Y);
+			shots[selectedTeam].draw(g, CM_PER_PIXELS, GOAL_POS_X, GOAL_POS_Y);
 		}
 	}
 	

@@ -51,10 +51,17 @@ public abstract class GUI {
 	protected abstract void onKeyPress(KeyEvent e);
 	
 	/**
+	 * Change the selected team
+	 * @param team number of the team selected
+	 */
+	protected abstract void selectTeam(int team);
+	
+	/**
 	 * Is called when the goal or save buttons are pressed to indicate
 	 * whether it is a goal or not
+	 * @param isGoal true if it was a goal
 	 */
-	protected abstract void setGoal(boolean b);
+	protected abstract void setGoal(boolean isGoal);
 	
 	/**
 	 * Is called when the show all tick box is changed to indicate
@@ -152,6 +159,22 @@ public abstract class GUI {
 				redraw();
 			}
 		});
+		
+		JButton team1 = new JButton("Team 1");
+		team1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				selectTeam(0);
+				redraw();
+			}
+		});
+		
+		JButton team2 = new JButton("Team 2");
+		team2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				selectTeam(1);
+				redraw();
+			}
+		});
 
 		JButton goal = new JButton("Goal");
 		goal.addActionListener(new ActionListener() {
@@ -210,6 +233,11 @@ public abstract class GUI {
 		loadSaveClear.add(save);
 		loadSaveClear.add(clear);
 		
+		JPanel teams = new JPanel();
+		teams.setMaximumSize(new Dimension(150, 50));
+		teams.setLayout(new GridLayout(1, 2));
+		teams.add(team1);
+		teams.add(team2);
 		
 		JPanel goalNoGoal = new JPanel();
 		goalNoGoal.setMaximumSize(new Dimension(150, 50));
@@ -230,8 +258,10 @@ public abstract class GUI {
 		
 		controls.add(loadSaveClear);
 		controls.add(Box.createRigidArea(new Dimension(0, 50)));
+		controls.add(teams);
+		controls.add(Box.createRigidArea(new Dimension(0, 10)));
 		controls.add(goalNoGoal);
-		controls.add(Box.createRigidArea(new Dimension(0, 50)));
+		controls.add(Box.createRigidArea(new Dimension(0, 10)));
 		controls.add(enterShow);
 
 		drawing = new JComponent() {
