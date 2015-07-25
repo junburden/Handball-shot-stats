@@ -68,7 +68,10 @@ public class GoalStats extends GUI{
 	
 	@Override
 	protected void saveShot() {
-		shots.addShot(clickShot);
+		if(clickShot != null) {
+		    shots.addShot(clickShot);
+		    clickShot = null;
+		}
 	}
 	
 	@Override
