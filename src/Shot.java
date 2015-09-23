@@ -13,15 +13,17 @@ public class Shot {
 	private double x;
 	private double y;
 	private boolean goal;
+	private int goalieTeam;
 	
-	private final int SIZE = 4;
+	private final int SIZE = 6;
 	private final String csvSplitBy = ",";
-	public static final String FILE_HEADER = "X,Y,goal";
+	public static final String FILE_HEADER = "X,Y,goal,goalies team";
 	
-	public Shot(double x, double y, boolean goal) {
+	public Shot(double x, double y, boolean goal, int goalieTeam) {
 		this.x = x;
 		this.y = y;
 		this.goal = goal;
+		this.goalieTeam = goalieTeam;
 	}
 	
 	public Shot(String string){
@@ -29,6 +31,7 @@ public class Shot {
 	    this.x = Double.parseDouble(elements[0]);
 	    this.y = Double.parseDouble(elements[1]);
 	    this.goal = Boolean.parseBoolean(elements[2]);
+	    this.goalieTeam = Integer.parseInt(elements[3]);
 	}
 	
 	public double getX() {
@@ -41,6 +44,10 @@ public class Shot {
 	
 	public boolean wasGoal() {
 		return goal;
+	}
+	
+	public int getGoaliesTeam() {
+		return goalieTeam;
 	}
 	
 	/**
@@ -63,6 +70,6 @@ public class Shot {
 	}
 	
 	public String toString(){
-		return x+","+y+","+goal;
+		return x+","+y+","+goal+","+goalieTeam;
 	}
 }

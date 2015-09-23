@@ -291,9 +291,8 @@ public abstract class GUI {
 		bottom.add(scroll);
 		bottom.add(loadQuit);
 
-		frame = new JFrame("Mapper");
-		// this makes the program actually quit when the frame's close button is
-		// pressed.
+		frame = new JFrame("Handball statistics");
+		// quit when the frame's close button is pressed.
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
 		frame.add(controls, BorderLayout.EAST);
@@ -302,10 +301,8 @@ public abstract class GUI {
 		
 		frame.getRootPane().setDefaultButton(submit);
 
-		// always do these two things last, in this order.
+		
 		frame.pack();
 		frame.setVisible(true);
 	}
 }
-
-// code for COMP261 assignments

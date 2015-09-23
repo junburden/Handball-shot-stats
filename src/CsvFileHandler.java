@@ -24,10 +24,7 @@ public class CsvFileHandler {
         	// Open file, if it already exists check if you want to override it
         	File file = new File(fileName);
         	boolean overrideFile = true;
-        	if (file.createNewFile()){
-    	        System.out.println("File is created!");
-    	    }else{
-    	        System.out.println("File already exists.");
+        	if (!file.createNewFile()){
     	        int dialogResult = JOptionPane.showConfirmDialog (null, "This file already exists, do you want to overwrite it?","Warning",JOptionPane.YES_NO_OPTION);
     	        if(dialogResult == JOptionPane.NO_OPTION){
     	            overrideFile = false;

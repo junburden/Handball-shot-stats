@@ -44,10 +44,34 @@ public class ShotList {
 	 * @param g Graphics window to be drawn on
 	 * @param scale of the window, cm/pixel
 	 */
-	public void draw(Graphics g, double scale, int xOffset, int yOffset) {
+	public void draw(Graphics g, double scale, int xOffset, int yOffset, int team) {
 		for(Shot shot:shots) {
-			shot.draw(g, scale, xOffset, yOffset);
+			if(shot.getGoaliesTeam() == team){
+			    shot.draw(g, scale, xOffset, yOffset);
+			}
 		}
+	}
+	
+	public String stats(int team) {
+		int shotsForTeam = 0;
+		int goalsForTeam = 0;
+		int savesForTeam = 0;
+		for(Shot s:shots){
+			if(s.getGoaliesTeam() == team) {
+				shotsForTeam++;
+				if(s.wasGoal()) {
+					goalsForTeam++;
+				}else {
+					savesForTeam++;
+				}
+			}
+		}
+		String output = "Out of " + shotsForTeam + " shots, there were " + goalsForTeam
+				      + " goals and " + savesForTeam + " saves\n";
+		if(shotsForTeam > 0) {
+			output += "Save rate of " + savesForTeam*100/shotsForTeam + "%\n";
+		}
+	return output;
 	}
 	
 	public String toString() {
