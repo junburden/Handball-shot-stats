@@ -5,9 +5,9 @@ Java application to record shot placement and success for handball.
 
 Statistics can be saved to and loaded from csv files
 The current layout of the csv files is:
-x position, y position, whether it is a goal(boolean)
+x position, y position, whether it is a goal(boolean), which team it was for(int)
 
-This will be expanded to:
+This will be expanded to include:
 
 x position(double), y position(double), whether it is a goal(boolean), shooters name(string), shooters team(string), goalies name(string) goalies team(string)
 
